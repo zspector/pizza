@@ -7,31 +7,34 @@ describe Pizza do
   end
 
   describe '.initialize' do
-    it 'records all of the toppings' do
-      toppings = [
+    let(:toppings) {[
         Topping.new('mushrooms', vegetarian: true),
         Topping.new('pepperoni')
-      ]
-      pizza = Pizza.new(toppings)
+      ]}
+    let(:pizza1) { Pizza.new(toppings) }
 
-      expect(pizza.toppings).to eq(toppings)
+    let(:pizza2) { Pizza.new }
+
+    it 'records all of the toppings' do
+
+      expect(pizza1.toppings).to eq(toppings)
     end
     it 'defaults the toppings to cheese only, if the pizza has no toppings' do
-      pizza = Pizza.new
 
-      expect(pizza.toppings.size).to eq(1)
-      expect(pizza.toppings.first.name).to eq('cheese')
+      expect(pizza2.toppings.size).to eq(1)
+      expect(pizza2.toppings.first.name).to eq('cheese')
     end
   end
 
   describe '.vegetarian?' do
-    it 'checks if a pizza is vegetarian' do
-      toppings = [
+    let(:toppings) {[
         Topping.new('bell peppers', vegetarian: true),
         Topping.new('pepperoni')
-      ]
-      pizza1 = Pizza.new(toppings)
-      pizza2 = Pizza.new
+      ]}
+    let(:pizza1) { Pizza.new(toppings) }
+    let(:pizza2) { Pizza.new }
+
+    it 'checks if a pizza is vegetarian' do
 
       expect(pizza1.vegetarian?).to eq(false)
       expect(pizza2.vegetarian?).to eq(true)
@@ -39,12 +42,14 @@ describe Pizza do
   end
 
   describe '.add_topping' do
-    it 'adds topping to existing pizza' do
-      toppings = [
+    let(:topping) {[
         Topping.new('bell peppers', vegetarian: true),
         Topping.new('pepperoni')
-      ]
-      pizza = Pizza.new(toppings)
+      ]}
+
+    let(:pizza) {Pizza.new(topping)}
+
+    it 'adds topping to existing pizza' do
 
       #Adds another pizza topping
       pizza.add_topping(Topping.new('mushrooms', vegetarian: true))
@@ -60,17 +65,18 @@ describe Topping do
     expect(Topping).to be_a(Class)
   end
   describe '.initialize' do
+    let(:topping) { Topping.new('olives') }
     it "sets the name of the topping" do
-      topping = Topping.new('olives')
 
       expect(topping.name).to eq('olives')
     end
 
-    it "sets whether or not the topping is vegetarian" do
-      topping = Topping.new 'bell peppers', vegetarian: true
-      topping2 = Topping.new 'pepperoni'
+    let(:topping1) { Topping.new('bell peppers', vegetarian: true) }
+    let(:topping2)  { Topping.new('pepperoni') }
 
-      expect(topping.vegetarian).to eq(true)
+    it "sets whether or not the topping is vegetarian" do
+
+      expect(topping1.vegetarian).to eq(true)
       expect(topping2.vegetarian).to eq(false)
     end
   end
